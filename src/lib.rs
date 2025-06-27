@@ -1,16 +1,30 @@
 mod linalg;
-use linalg::Vector;
-pub fn add(left: u64, right: u64) -> u64 {
-    left + right
-}
+mod mem;
 
 #[cfg(test)]
-mod tests {
+mod linalg_tests {
+    use std::f32::consts::PI;
+
+    use crate::linalg::{Matrix, Vector};
+
     use super::*;
 
     #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
+    fn matrix_vector() {
+        let I = Matrix::<2, 2>::new(&[
+            1.0, 0.0,
+            0.0, 1.0
+        ]);
+        let R = |x: f32| { 
+            return Matrix::<2, 2>::new(&[
+                f32::cos(x), -f32::sin(x),
+                f32::sin(x), f32::cos(x)
+        ])};
+        let y = Vector::<2>::new(&[0.0, 1.0]);
+        let x = Vector::<2>::new(&[1.0, 0.0]);
+        assert_eq!(I*y, y);
+        assert!(4.0*I*y > y);
+        println!("{:?}", R(PI/2.0) * y);
+        assert!(R(PI/2.0) * y == x)
     }
 }

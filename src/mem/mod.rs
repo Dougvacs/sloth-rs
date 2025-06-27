@@ -11,7 +11,7 @@ impl<T: Clone> Ptr<T> {
         let mut v = self.0.lock();
         *v = val
     }
-    pub fn clone_inner(&self) -> T {
+    pub fn get_clone(&self) -> T {
         self.0.lock().deref().clone()
     }
 }
